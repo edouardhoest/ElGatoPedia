@@ -14,9 +14,10 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "picture_id")
-    private Picture picture;
-    @Column(length = 500)
+    @JoinColumn(name = "cat_id")
+    private Cat cat;
+    @Column(length = 1024)
     private String comment;
-
+    @Column(length = 20)
+    private String username;
 }

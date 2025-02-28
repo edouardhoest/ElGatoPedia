@@ -1,10 +1,10 @@
 package elgatopedia.project.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 
 @Getter
 @Setter
@@ -21,8 +21,6 @@ public class Picture {
     @Column(length = 1000)
     private String url;
     @Column(length = 50)
-    private String picture_name;
-
-    @OneToMany(mappedBy = "picture", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comment> comments;
+    @JsonProperty(value = "picture_name")
+    private String pictureName;
 }
