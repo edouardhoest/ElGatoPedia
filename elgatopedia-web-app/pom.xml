@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>elgatopedia-app</artifactId>
+    <artifactId>elgatopedia-web-app</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

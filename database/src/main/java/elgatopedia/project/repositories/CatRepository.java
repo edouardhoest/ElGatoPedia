@@ -14,3 +14,4 @@ public interface CatRepository extends JpaRepository<Cat, Long> {
     @Query(value = "SELECT * FROM cat", nativeQuery = true)
     List<Cat> findAll();
 }
+

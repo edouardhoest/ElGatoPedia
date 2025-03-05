@@ -1,7 +1,7 @@
 package elgatopedia.project.controllers;
 
 import elgatopedia.project.entities.Cat;
-import elgatopedia.project.repositories.CatRepository;
+import elgatopedia.project.services.CatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,12 +16,11 @@ import java.util.List;
 public class CatController {
 
     @Autowired
-    private CatRepository catRepository;
-
+    private CatService catService;
 
     @GetMapping()
     public String getCats(Model model) {
-        List<Cat> cats = catRepository.findAll();
+        List<Cat> cats = catService.findAll();
         model.addAttribute("cats", cats);
         return "cats";
     }
@@ -36,7 +35,7 @@ public class CatController {
     @PostMapping("/add")
     public String saveCat(@ModelAttribute Cat cat, Model model) {
         try {
-            catRepository.save(cat);
+            catService.save(cat);
             return "redirect:/cats";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
