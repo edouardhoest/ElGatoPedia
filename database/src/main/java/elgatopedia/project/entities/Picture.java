@@ -1,28 +1,33 @@
 package elgatopedia.project.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "picture")
 public class Picture {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "cat_id")
     private Cat cat;
-    @Column(length = 1000)
-    private String url;
-    @Column(length = 50)
-    private String picture_name;
 
-    @OneToMany(mappedBy = "picture", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comment> comments;
+    @Column(length = 50)
+    @JsonProperty(value = "picture_name")
+    private String pictureName;
+
+    @Lob
+    @Column(name = "picture_data", columnDefinition = "LONGBLOB")
+    @JsonProperty(value = "picture_data")
+    private byte[] pictureData;
 }
