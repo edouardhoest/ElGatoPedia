@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ElGatoPedia</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin: 1em 0;
+        }
+
+        .mb-3 {
+            margin-bottom: 1em;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .flex-column {
+            flex-direction: column;
+        }
+
+        form > div.formContainer > div {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${cat.name} + ' | ElGatoPedia'" style="text-align: center;"></h1>
+
+<p th:text="${cat.description}"></p>
+<p th:text="${cat.age} + ' ans'"></p>
+
+<a href="/">retourno a el menuto</a>
+
+<div class="d-flex flex-column">
+    <div class="container">
+        <div>
+            <fieldset>
+                <legend>Ajouter une photo</legend>
+                <form th:action="@{/pictures/{id}/add(id=${cat.id})}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3 formContainer">
+                        <div class="mb-3">
+                            <label for="picture">Photo</label>
+                            <input type="file" name="picture">
+                        </div>
+                        <div>
+                            <label for="picture_name">Nom de la photo</label>
+                            <input type="text" name="picture_name">
+                        </div>
+                    </div>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </fieldset>
+        </div>
+
+        <div>
+            <fieldset>
+                <legend>Ajouter un commentaire</legend>
+                <form th:action="@{/comments/{id}/add(id=${cat.id})}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3 formContainer">
+                        <div class="mb-3">
+                            <label for="username">Nom</label>
+                            <input type="text" name="username">
+                        </div>
+                        <div>
+                            <label for="comment">Commentaire</label>
+                            <textarea name="comment"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="photo">
+            <div th:each="picture : ${pictureList}" class="d-flex flex-column">
+                <img th:src="@{/pictures/{id}(id=${picture.id})}" th:text="'Photo de ' + ${cat.name}"
+                     style="max-width: 300px; max-height: 300px;"/>
+                <a th:href="@{/picture/{id}(id=${picture.id})}">Voir la photo</a>
+            </div>
+        </div>
+
+        <div class="comment">
+            <div th:each="comment : ${commentList}">
+                <p th:text="${comment.comment}"></p>
+                <small>Publié par <span th:text="${comment.username}"></span></small>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
