@@ -2,6 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Lista de Gatos</title>
+        <style>
+        .img-size {
+            display: block;
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+        </style>
     </head>
 
     <body>
@@ -37,6 +49,6 @@
             </tr>
         </table>
 
-        <a href="/"><img src="/gato_guapo.jpg" alt="Failed to load gato"></a>
+        <a href="/" class="img-size"><img src="/gato_guapo.jpg" alt="Failed to load gato"></a>
     </body>
 </html>
