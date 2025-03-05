@@ -16,7 +16,8 @@
 	<description>JavaEE Project</description>
 	<modules>
 		<module>database</module>
-		<module>elgatopedia-app</module>
+		<module>elgatopedia-web-app</module>
+		<module>el-gentry</module>
 	</modules>
 	<properties>
 		<java.version>21</java.version>

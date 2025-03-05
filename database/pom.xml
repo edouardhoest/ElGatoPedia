@@ -9,12 +9,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>elgatopedia-app</artifactId>
+    <artifactId>database</artifactId>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
 
 </project>
