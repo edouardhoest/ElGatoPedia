@@ -1,36 +1,50 @@
 package elgatopedia.project.controllers;
 
+import elgatopedia.project.entities.Cat;
 import elgatopedia.project.entities.Picture;
-import elgatopedia.project.repositories.PictureRepository;
+import elgatopedia.project.services.CatService;
+import elgatopedia.project.services.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/pictures")
 public class PictureController {
     @Autowired
-    private PictureRepository pictureRepository;
-
-    @GetMapping()
-    public List<Picture> getAllPictures() {
-        return pictureRepository.findAll();
-    }
+    private PictureService pictureService;
+    @Autowired
+    private CatService catService;
 
     @GetMapping("/{id}")
-    public Picture getPictureById(@PathVariable long id) {
-        return pictureRepository.findById(id);
+    public ResponseEntity<byte[]> getPicture(@PathVariable Long id) {
+        Optional<Picture> picture = pictureService.getPictureById(id);
+        if (picture.isPresent() && picture.get().getPictureData() != null) {
+            return ResponseEntity.ok()
+                    .header("Content-Type", "image/jpeg") // ou image/png selon ton cas
+                    .body(picture.get().getPictureData());
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<String> savePictures(@RequestBody Picture picture) {
+    @PostMapping("/{id}/add")
+    public String savePictures(@PathVariable("id") Long catId, @RequestParam("picture_name") String pictureName,
+                               @RequestParam("picture") MultipartFile pictureFile) {
         try {
-            pictureRepository.save(picture);
+            Cat cat = catService.findById(catId);
+            Picture picture = Picture.builder()
+                    .pictureData(pictureFile.getBytes())
+                    .pictureName(pictureName)
+                    .cat(cat)
+                    .build();
+            pictureService.savePicture(picture);
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(e.getMessage());
+            return "redirect:/cats/" + catId;
         }
-        return ResponseEntity.accepted().build();
+        return "redirect:/cats/" + catId;
     }
 }

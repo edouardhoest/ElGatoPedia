@@ -3,6 +3,7 @@ package elgatopedia.project.controllers;
 import elgatopedia.project.entities.Cat;
 import elgatopedia.project.services.CatService;
 import elgatopedia.project.services.CommentService;
+import elgatopedia.project.services.PictureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class CatController {
     private CatService catService;
 
     @Autowired
+    private PictureService pictureService;
+
+    @Autowired
     private CommentService commentService;
 
     @GetMapping()
@@ -33,6 +37,7 @@ public class CatController {
     public String getCatById(@PathVariable long id, Model model) {
         Cat cat = catService.findById(id);
         model.addAttribute("cat", cat);
+        model.addAttribute("pictureList", pictureService.getPicturesByCatId(cat.getId()));
         model.addAttribute("commentList", commentService.getCommentsByCatId(cat.getId()));
         return "cats-details";
     }
