@@ -25,7 +25,7 @@ public class PictureController {
         Optional<Picture> picture = pictureService.getPictureById(id);
         if (picture.isPresent() && picture.get().getPictureData() != null) {
             return ResponseEntity.ok()
-                    .header("Content-Type", "image/jpeg") // ou image/png selon ton cas
+                    .header("Content-Type", "image/jpeg")
                     .body(picture.get().getPictureData());
         }
         return ResponseEntity.notFound().build();
