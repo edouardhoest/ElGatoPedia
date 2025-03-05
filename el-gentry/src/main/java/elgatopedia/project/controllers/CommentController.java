@@ -29,10 +29,10 @@ public class CommentController {
         try {
             Cat cat = catService.findById(catId);
             commentService.addComment(Comment.builder().comment(content).username(username).cat(cat).build());
-            return "redirect:/cats/" + catId;
+            return "redirect:/cats-list/" + catId;
 
         } catch (Exception e) {
-            return "redirect:/cats/" + catId;
+            return "redirect:/cats-list/" + catId;
         }
     }
 }

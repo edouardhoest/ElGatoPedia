@@ -43,8 +43,8 @@ public class PictureController {
                     .build();
             pictureService.savePicture(picture);
         } catch (Exception e) {
-            return "redirect:/cats/" + catId;
+            return "redirect:/cats-list/" + catId;
         }
-        return "redirect:/cats/" + catId;
+        return "redirect:/cats-list/" + catId;
     }
 }

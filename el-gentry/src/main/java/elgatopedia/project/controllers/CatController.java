@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/cats")
+@RequestMapping("/cats-list")
 public class CatController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class CatController {
     public String getCats(Model model) {
         List<Cat> cats = catService.findAll();
         model.addAttribute("cats", cats);
-        return "cats";
+        return "cats-list";
     }
 
     @GetMapping("/{id}")
@@ -46,10 +46,10 @@ public class CatController {
     public String saveCat(@ModelAttribute Cat cat, Model model) {
         try {
             catService.save(cat);
-            return "redirect:/cats";
+            return "redirect:/cats-list";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            return "cats";
+            return "cats-list";
         }
     }
 }
