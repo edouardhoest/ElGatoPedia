@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Gatos</title>
+</head>
+<body>
+<h1>Agregar un Gato</h1>
+<div th:if="${not #strings.isEmpty(error)}">
+    <p style="color: red" th:text="${error}"></p>
+</div>
+<form action="/cats-list/add" method="post">
+    <label>Nombre:</label>
+    <input type="text" name="name" required><br>
+    <label>Edad:</label>
+    <input type="number" name="age" required><br>
+    <label>Descripción:</label>
+    <input type="text" name="description" required><br>
+    <label>Foto:</label>
+    <input type="file" name="picture" required><br>
+    <button type="submit">Agregar</button>
+</form>
+
+<h1>Lista de Gatos</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Descripción</th>
+        <th>Acción</th>
+    </tr>
+    <tr th:each="cat : ${cats}">
+        <td th:text="${cat.id}"></td>
+        <td th:text="${cat.name}"></td>
+        <td th:text="${cat.age}"></td>
+        <td th:text="${cat.description}"></td>
+        <td><a th:href="@{/cats/{id}(id=${cat.id})}">Detalles</a></td>
+    </tr>
+</table>
+
+<a href="/"><img src="/gato_guapo.jpg" alt="Failed to load gato"></a>
+</body>
+</html>
