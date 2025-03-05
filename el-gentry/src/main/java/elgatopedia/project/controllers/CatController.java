@@ -27,7 +27,7 @@ public class CatController {
 
     @GetMapping("/{id}")
     public String getCatById(@PathVariable long id, Model model) {
-        Cat cat = catRepository.findById(id);
+        Cat cat = catService.findById(id);
         model.addAttribute("cat", cat);
         return "cats-details";
     }
